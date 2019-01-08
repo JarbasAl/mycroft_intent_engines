@@ -6,7 +6,7 @@ Early work, PR's welcome
 
 # install
 
-    pip install mycroft_intent_engines
+    pip install mycroft_engines
     
 # usage
 
