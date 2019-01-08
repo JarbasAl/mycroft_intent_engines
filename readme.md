@@ -1,8 +1,26 @@
-# IntentEngine
+# Mycroft Intent Engines
 
-base class to add new intent engines to mycroft, check the [examples folder](./examples)
+Utils for packaging new intent engines as mycroft skills, check the [examples folder](./examples)
 
-## creating your intent engine
+Early work, PR's welcome
+
+# install
+
+    pip install mycroft_intent_engines
+    
+# usage
+
+there are 3 main steps to add new kinds of intents to mycroft
+
+* create the engine class
+* create the engine wrapper skill
+* create an helper MycroftSkill base class
+
+## IntentEngine
+
+base class to add new intent engines to mycroft
+
+### creating your intent engine
 
 the IntentEngine class exposes add_intent, remove_intent, add_entity, 
 remove_entity methods, these will store your samples for training
@@ -13,7 +31,7 @@ implement engine specific training
 
     class MyEngine(IntentEngine):
         def __init__(self):
-            self.name = "MyEngine"
+            self.name = "my_engine"
             IntentEngine.__init__(self, self.name)
             
         def train(self, single_thread=False):
@@ -36,7 +54,7 @@ implement engine specific training
             return data
 
 
-# Intent Engine Skill
+## Intent Engine Skill
 
 IntentEngine skill is a Mycroft skill baseclass that registers and triggers intents using your own intent engine
 
@@ -45,7 +63,8 @@ IntentEngine skill is a Mycroft skill baseclass that registers and triggers inte
 - on fallback trigger uses engine to determine intent
 - registers self as a fallback skill, priority configurable (default is 4)
 
-## Creating a EngineSkill class
+    
+### Creating a EngineSkill class
 
 all you need to do is subclass the IntentEngineSkill and initialize your engine
  
@@ -61,8 +80,11 @@ all you need to do is subclass the IntentEngineSkill and initialize your engine
   
 install this as a normal mycroft skill and your new kind of intent will become available in regular mycroft skills
 
+in requirements.txt add 
+    
+    mycroft_engines
 
-## Creating a MySpecialSkill class
+### Creating a MySpecialSkill class
 
 in other skills you can now register intents, create two handlers to make 
 your life easy
@@ -94,7 +116,7 @@ above methods in all skills
              # same as above
 
 
-## Creating actual Mycroft Skills
+### Creating actual Mycroft Skills
 
 now just get to work!
 
@@ -120,3 +142,4 @@ of the above in an installed skill
     import sys
     sys.path.append(skills_dir)
     from my_engine import MySpecialSkill
+    
